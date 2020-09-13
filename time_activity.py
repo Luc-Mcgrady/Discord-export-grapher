@@ -1,0 +1,16 @@
+import discordexport
+from plotdict import plot_dict
+
+if __name__ == '__main__':
+    messages = discordexport.json_to_messages("messages.json")
+
+    months = {}
+
+    for message in messages:
+        # messages.values["content"]
+        try:
+            months[str(message.get_datetime().date())[:-3]] += 1
+        except KeyError:
+            months[str(message.get_datetime().date())[:-3]] = 0
+
+    plot_dict(months, False, True, 1)
