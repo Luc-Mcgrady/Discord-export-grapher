@@ -4,12 +4,13 @@ from lib import discordjson, plotdict
 class _WordActivityPlot:
 
     def __init__(self, messages: list, proportional=True):
-        self._plotmax = 0
+        self._plotmax = 0  # The largest value on the graph
         self._plotbuffer = []
         self.proportional = proportional
         self.messages = messages
         self.month_words = {}
-        for message in self.messages:
+
+        for message in self.messages:  # Calculate all the words over the months
             message: discordjson.DiscordMessage
             wordcount = len(message.get_content().split(' '))
 
@@ -20,13 +21,16 @@ class _WordActivityPlot:
                 self.month_words[month] = wordcount
 
     def recalc_plotmax(self, months: dict = None):
+        """Get plotmax or with 1arg calculate plotmax"""
         if months is None:
-            return self._plotmax
+            return self._plotmax  # Can just be used to get plotmax but not reccomended
 
         self._plotmax = max(self._plotmax, *list(months.values()))
         return self._plotmax
 
     def show(self):
+        """Display the data gathered as a graph.
+        You can have the graph proportional to the total words in the month or just as total hits"""
         plot_data = []
 
         plotdict.plt.ylim(0, self._plotmax * 1.1)  # If not proportional
@@ -62,6 +66,7 @@ class _WordActivityPlot:
         plotdict.plt.show()
 
     def word_activity_plot(self, target_word):
+        """Plots the activity over months of the target word and saves it to plot with the show function"""
         months = {}
 
         for message in self.messages:
@@ -83,8 +88,7 @@ class _WordActivityPlot:
 if __name__ == '__main__':
     messages = discordjson.json_to_messages("messages.json")
 
-    proportional = True if input("(y/n) Should the count be a precentage of the months total words: ") == 'y' else False
-    grapher = _WordActivityPlot(messages, proportional)
+    grapher = _WordActivityPlot(messages)
 
     target_word = None
     while True:
@@ -93,5 +97,7 @@ if __name__ == '__main__':
             break
         grapher.word_activity_plot(target_word)
 
+    grapher.proportional = \
+        True if input("(y/n) Should the count be a precentage of the months total words: ") == 'y' else False
     grapher.show()
     input()
