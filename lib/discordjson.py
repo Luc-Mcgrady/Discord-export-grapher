@@ -2,7 +2,6 @@
 import json
 import datetime
 
-
 class DiscordMessage:
     def __init__(self, jsondict: dict):
         assert type(jsondict) == dict
@@ -26,12 +25,19 @@ class DiscordMessage:
 
         return datetime.datetime(year, month, day, hour, minute, int(second))
 
+    def get_content(self):
+        return self.values["content"]
+
 
 def json_to_messages(filename: str):
-    vals = json.load(open(filename, 'r', encoding="utf8"))["messages"]
+    try:
+        vals = json.load(open(filename, 'r', encoding="utf8"))["messages"]
+    except FileNotFoundError as e:
+        raise type(e)("Name your csv file messages.csv and put it in the directory with this file")
+
     return [DiscordMessage(a) for a in vals]
 
 
 if __name__ == '__main__':
-    for message in json_to_messages("messages.json"):
+    for message in json_to_messages("../messages.json"):
         print(message.get_datetime())

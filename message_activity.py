@@ -1,8 +1,8 @@
-import discordexport
-from plotdict import plot_dict
+from lib import discordjson
+from lib.plotdict import plot_dict
 
 if __name__ == '__main__':
-    messages = discordexport.json_to_messages("messages.json")
+    messages = discordjson.json_to_messages("messages.json")
 
     months = {}
 
@@ -13,4 +13,4 @@ if __name__ == '__main__':
         except KeyError:
             months[str(message.get_datetime().date())[:-3]] = 0
 
-    plot_dict(months, False, True, 1)
+    plot_dict(months, False, True)
