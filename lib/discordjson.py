@@ -38,7 +38,7 @@ def json_to_messages(filename: str):
     try:
         vals = json.load(open(filename, 'r', encoding="utf8"))["messages"]
     except FileNotFoundError as e:
-        raise type(e)("Name your csv file messages.csv and put it in the directory with this file")
+        raise type(e)("Name your json file messages.json and put it in the directory with this file")
 
     return [DiscordMessage(a) for a in vals]
 

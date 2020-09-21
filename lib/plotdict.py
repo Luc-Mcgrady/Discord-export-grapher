@@ -2,7 +2,6 @@ from matplotlib import pyplot as plt
 
 plt.xticks(rotation="vertical")
 
-
 def plot_dict(vals: dict, sort=False, show=False, min_index=0, max_index=None, label: str = None,
               autoscale: bool = True):
     """Plots the given dictionary to the "plt" variable of this import"""
