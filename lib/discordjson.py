@@ -28,7 +28,7 @@ class DiscordMessage:
 
         return datetime.datetime(year, month, day, hour, minute, int(second))
 
-    def get_content(self):
+    def get_content(self) -> str:
         """Neater optional get function for the message text"""
         return self.values["content"]
 
