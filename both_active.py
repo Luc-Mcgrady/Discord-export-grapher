@@ -4,7 +4,7 @@ from collections import Counter
 # import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    messages = discordjson.json_to_messages("messages.json")
+    messages = discordjson.json_to_messages()
 
     startday = messages[0].get_datetime().date()
 

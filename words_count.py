@@ -1,7 +1,7 @@
 from lib import discordjson, plotdict
 
 if __name__ == '__main__':
-    messages = discordjson.json_to_messages("messages.json")
+    messages = discordjson.json_to_messages()
 
     words = ' '.join([message.values["content"] for message in messages]).split(' ')
 

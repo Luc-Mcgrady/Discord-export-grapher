@@ -4,7 +4,7 @@ if __name__ == '__main__':
 
 
 
-        messages = json_to_messages("messages.json")
+        messages = json_to_messages()
         last_author_ID = messages[0].values["author"]["id"]
         last_time = messages[0].get_datetime().timestamp()
         delays = []

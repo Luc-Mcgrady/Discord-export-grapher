@@ -2,6 +2,8 @@
 import json
 import datetime
 
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
 class DiscordMessage:
     """Holds the json values of a message exported by https://github.com/Tyrrrz/DiscordChatExporter as json"""
@@ -33,8 +35,12 @@ class DiscordMessage:
         return self.values["content"]
 
 
-def json_to_messages(filename: str):
+def json_to_messages(filename: str = None):
     """Gets a list of DiscordMessage objects containing the json of the file"""
+    if filename is None:
+        Tk().withdraw()
+        filename = askopenfilename(filetypes=(("Discord messages (*.json)", "*.json"),))
+
     try:
         vals = json.load(open(filename, 'r', encoding="utf8"))["messages"]
     except FileNotFoundError as e:

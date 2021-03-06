@@ -4,9 +4,14 @@ import datetime
 import copy
 import bar_chart_race as bcr
 
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+
 if __name__ == '__main__':
 
-    messages = discordjson.json_to_messages("messages.json")
+    Tk().withdraw()
+    in_filename = askopenfilename(filetypes=(("Discord messages (*.json)", "*.json"),))
+    messages = discordjson.json_to_messages(in_filename)
 
     word_counts = {}
     date_period_words = {}
@@ -72,9 +77,14 @@ if __name__ == '__main__':
     print(plot)
     print(used_words)
 
+    in_filename = in_filename.split('.')[0]
+    out_filename = asksaveasfilename(filetypes=(("MPEG video (*.mpeg)", "*.mpeg"),),
+                                     defaultextension=".mpeg",
+                                     initialfile=in_filename)
+
     bcr.bar_chart_race(plot,
                        title="Words in messages between...",
-                       filename="newstuff.mpeg",
+                       filename=out_filename,
                        sort="desc",
                        n_bars=bar_count,
                        period_length=750,
